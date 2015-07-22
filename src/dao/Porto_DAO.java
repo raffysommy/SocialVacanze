@@ -14,7 +14,7 @@ public class Porto_DAO {
 	protected static java.util.Map<Integer,Porto> restoredObjects= new java.util.HashMap<Integer,Porto>();
 	public static Porto create(Integer IDPorto) throws SQLException{
 		Connection c = DBManager.getConnection();
-		PreparedStatement preparedstat = c.prepareStatement("INSERT INTO porti (IDPorto) VALUES (?)");
+		PreparedStatement preparedstat = c.prepareStatement("INSERT INTO porti (IdPorto) VALUES (?)");
 		preparedstat.setInt(1, IDPorto);
 		preparedstat.executeUpdate();
 		preparedstat.close();
@@ -54,7 +54,7 @@ public class Porto_DAO {
 		ResultSet rs= preparedStatement.executeQuery();
 		if(rs.first()){
 			if (!rs.wasNull()){
-				port=new Porto(rs.getInt("IDPorto"),rs.getString("Nome"));
+				port=new Porto(rs.getInt("IdPorto"),rs.getString("Nome"));
 				restoredObjects.put(IDPorto, port);
 			}
 		}
@@ -86,7 +86,7 @@ public class Porto_DAO {
 		Integer id=porto.getIDPorto();
 		if(id != null){
 			Connection connection = DBManager.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM porti WHERE IDPorto=?");
+			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM porti WHERE IdPorto=?");
 			preparedStatement.setInt(1, porto.getIDPorto());
 			preparedStatement.executeUpdate();
 			restoredObjects.remove(id);			
@@ -100,7 +100,7 @@ public class Porto_DAO {
 		ArrayList<Porto> listaporti = new ArrayList<Porto>();
 		ResultSet rs= preparedStatement.executeQuery();
 		while(rs.next()){
-				listaporti.add(new Porto(rs.getInt("IDPorto"),rs.getString("Nome")));
+				listaporti.add(new Porto(rs.getInt("IdPorto"),rs.getString("Nome")));
 		}
 
 		rs.close();

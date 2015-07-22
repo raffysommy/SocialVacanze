@@ -3,6 +3,7 @@
  */
 package corebusiness.pianiVacanze;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -30,11 +31,11 @@ public interface IGestorePianiVacanze {
      * @param P
      */
     public void VerificaDate(PianoVacanza P);
-
+    public ArrayList<Porto> ListaPorti();
     /**
      * @param D 
      * @param P 
      * @return
      */
-    public PianoVacanza[] RicercaVacanza(Date D, Porto P);
+    public ArrayList<PianoVacanza> RicercaVacanza(Date D, Porto P);
 }

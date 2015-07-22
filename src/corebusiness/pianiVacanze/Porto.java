@@ -44,5 +44,24 @@ public class Porto {
 	public void setNome(String nome) {
 		Nome = nome;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Porto other = (Porto) obj;
+		if (IDPorto == null) {
+			if (other.IDPorto != null)
+				return false;
+		} else if (!IDPorto.equals(other.IDPorto))
+			return false;
+		return true;
+	}
 
 }

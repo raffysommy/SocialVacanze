@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class H2ConnectionFactory implements IConnectionFactory {
 	
-	protected final static String DB_PATH = ".\\storage.h2";
+	protected final static String DB_PATH = "./test";
 	protected final static String CONNECTION_STRING = "jdbc:h2:" + DB_PATH;
 	
 	@Override
