@@ -8,8 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import corebusiness.pianiVacanze.PianoVacanza;
-import corebusiness.pianiVacanze.exception.PianoVacanzeNotFound;
-public class PianiVacanze_DAO {
+import corebusiness.pianiVacanze.exception.PianoVacanzaNotFound;
+import corebusiness.pianiVacanze.exception.PortoNotFound;
+public class PianoVacanza_DAO {
 	protected static java.util.Map<Integer,PianoVacanza> restoredObjects= new java.util.HashMap<Integer,PianoVacanza>();
 	public static PianoVacanza create(Integer IDPianoVacanza) throws SQLException{
 		Connection c = DBManager.getConnection();
@@ -42,7 +43,7 @@ public class PianiVacanze_DAO {
 		return piano;
 
 	}
-	public static PianoVacanza read(Integer IDPianoVacanza) throws SQLException, PianoVacanzeNotFound{
+	public static PianoVacanza read(Integer IDPianoVacanza) throws SQLException, PianoVacanzaNotFound{
 		if(restoredObjects.containsKey(IDPianoVacanza)){
 			return restoredObjects.get(IDPianoVacanza);
 		}
@@ -53,21 +54,26 @@ public class PianiVacanze_DAO {
 		ResultSet rs= preparedStatement.executeQuery();
 		if(rs.first()){
 			if (!rs.wasNull()){
-				piano=new PianoVacanza(rs.getInt("IDPianoVacanza"),rs.getDate("DataPartenza"),
-						rs.getInt("NumeroMassimo"),rs.getInt("Costo"),rs.getDate("DataArrivo"),null,null,null);
+				try {
+					piano=new PianoVacanza(rs.getInt("IDPianoVacanza"),rs.getDate("DataPartenza"),
+							rs.getInt("NumeroMassimo"),rs.getInt("Costo"),rs.getDate("DataArrivo"),null,Porto_DAO.read(rs.getInt("PortoPartenza")),Porto_DAO.read(rs.getInt("PortoArrivo")));
+				} catch (PortoNotFound e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				restoredObjects.put(IDPianoVacanza, piano);
 			}
 		}
 		else {
-			throw new PianoVacanzeNotFound();
+			throw new PianoVacanzaNotFound();
 		}
 		rs.close();
 		preparedStatement.close();
 		return piano;
 	}
-	public static void update(PianoVacanza pianoVacanza) throws SQLException, PianoVacanzeNotFound{
+	public static void update(PianoVacanza pianoVacanza) throws SQLException, PianoVacanzaNotFound{
 		if(pianoVacanza.getIDPianoVacanza()==null){
-			PianoVacanza Piano = PianiVacanze_DAO.create(); // Ottengo un nuovo id
+			PianoVacanza Piano = PianoVacanza_DAO.create(); // Ottengo un nuovo id
 			pianoVacanza.setIDPianoVacanza(Piano.getIDPianoVacanza());
 			restoredObjects.put(pianoVacanza.getIDPianoVacanza(), pianoVacanza); 
 
@@ -84,7 +90,7 @@ public class PianiVacanze_DAO {
 		preparedStatement.setInt(8, pianoVacanza.getIDPianoVacanza());
 		boolean rowaffected = preparedStatement.execute();
 		if(!rowaffected){
-			throw new PianoVacanzeNotFound();
+			throw new PianoVacanzaNotFound();
 		}
 		DBManager.closeConnection();
 	}
@@ -107,8 +113,13 @@ public class PianiVacanze_DAO {
 		ArrayList<PianoVacanza> listapiani = new ArrayList<PianoVacanza>();
 		ResultSet rs= preparedStatement.executeQuery();
 		while(rs.next()){
-				listapiani.add(new PianoVacanza(rs.getInt("IDPianoVacanza"),rs.getDate("DataPartenza"),
-						rs.getInt("NumeroMassimo"),rs.getInt("Costo"),rs.getDate("DataArrivo"),null,null,null));
+				try {
+					listapiani.add(new PianoVacanza(rs.getInt("IDPianoVacanza"),rs.getDate("DataPartenza"),
+							rs.getInt("NumeroMassimo"),rs.getInt("Costo"),rs.getDate("DataArrivo"),null,Porto_DAO.read(rs.getInt("PortoPartenza")),Porto_DAO.read(rs.getInt("PortoArrivo"))));
+				} catch (PortoNotFound e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 
 		rs.close();

@@ -17,6 +17,9 @@ public class Porto {
 		IDPorto = iDPorto;
 		Nome = nome;
 	}
+	public Porto(Integer iDPorto2) {
+		this.IDPorto=iDPorto2;
+	}
 	/**
 	 * @return the iDPorto
 	 */

@@ -32,6 +32,9 @@ public class Prenotazione {
 		this.pianoVacanza = pianoVacanza;
 		this.utente = utente;
 	}
+	public Prenotazione(Integer iDPrenotazione2) {
+		this.IDPrenotazione=iDPrenotazione2;
+	}
 	/**
 	 * @return the iDPrenotazione
 	 */
