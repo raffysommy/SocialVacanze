@@ -31,19 +31,21 @@ public class PianoVacanza {
 	 * @param portoArrivo
 	 */
 	public PianoVacanza(Integer iDPianoVacanza, Date dataPartenza, Integer numeroMassimo, Integer costo,
-			Date dataArrivo, ArrayList<Barca> barche, Porto portoPartenza, Porto portoArrivo) {
+			Date dataArrivo, Barca barca, Porto portoPartenza, Porto portoArrivo) {
 		super();
-		IDPianoVacanza = iDPianoVacanza;
-		DataPartenza = dataPartenza;
-		NumeroMassimo = numeroMassimo;
-		Costo = costo;
-		DataArrivo = dataArrivo;
-		Barche = barche;
-		PortoPartenza = portoPartenza;
-		PortoArrivo = portoArrivo;
+		this.IDPianoVacanza = iDPianoVacanza;
+		this.DataPartenza = dataPartenza;
+		this.NumeroMassimo = numeroMassimo;
+		this.Costo = costo;
+		this.DataArrivo = dataArrivo;
+		this.barca = barca;
+		this.PortoPartenza = portoPartenza;
+		this.PortoArrivo = portoArrivo;
 	}
 
-
+	public PianoVacanza(Integer iDPianoVacanza){
+		this.IDPianoVacanza=iDPianoVacanza;
+	}
 
 	/**
      * 
@@ -66,7 +68,7 @@ public class PianoVacanza {
     private Date DataArrivo;
 
 
-    private ArrayList<Barca> Barche;
+    private Barca barca;
     
     private Porto PortoPartenza;
     private Porto PortoArrivo;
@@ -185,24 +187,6 @@ public class PianoVacanza {
 
 
 
-	/**
-	 * @return the barche
-	 */
-	public ArrayList<Barca> getBarche() {
-		return Barche;
-	}
-
-
-
-
-	/**
-	 * @param barche the barche to set
-	 */
-	public void setBarche(ArrayList<Barca> barche) {
-		Barche = barche;
-	}
-
-
 
 
 	/**
@@ -241,4 +225,19 @@ public class PianoVacanza {
 	public void setPortoArrivo(Porto portoArrivo) {
 		PortoArrivo = portoArrivo;
 	}
+
+	/**
+	 * @return the barca
+	 */
+	public Barca getBarca() {
+		return barca;
+	}
+
+	/**
+	 * @param barca the barca to set
+	 */
+	public void setBarca(Barca barca) {
+		this.barca = barca;
+	}
+
 }

@@ -1,5 +1,6 @@
 package corebusiness.barche;
 
+import corebusiness.utenti.ProprietarioBarca;
 
 /**
  * 
@@ -19,12 +20,13 @@ public class Barca {
 	 * @param targa
 	 * @param numeroPosti
 	 */
-	public Barca(Integer idBarca, String nome, Integer lunghezza, String targa, Integer numeroPosti) {
+	public Barca(Integer idBarca, String nome, Integer lunghezza, String targa, Integer numeroPosti,ProprietarioBarca proprietarioBarca) {
 		this.IdBarca = idBarca;
 		this.Nome = nome;
 		this.Lunghezza = lunghezza;
 		this.Targa = targa;
 		this.NumeroPosti = numeroPosti;
+		this.proprietarioBarca=proprietarioBarca;
 	}
 
 	/**
@@ -51,6 +53,8 @@ public class Barca {
      * 
      */
     private Integer NumeroPosti;
+    
+    private ProprietarioBarca proprietarioBarca;
 
 	/**
 	 * @return the idBarca
@@ -120,6 +124,20 @@ public class Barca {
 	 */
 	public void setNumeroPosti(Integer numeroPosti) {
 		NumeroPosti = numeroPosti;
+	}
+
+	/**
+	 * @return the proprietarioBarca
+	 */
+	public ProprietarioBarca getProprietarioBarca() {
+		return proprietarioBarca;
+	}
+
+	/**
+	 * @param proprietarioBarca the proprietarioBarca to set
+	 */
+	public void setProprietarioBarca(ProprietarioBarca proprietarioBarca) {
+		this.proprietarioBarca = proprietarioBarca;
 	}
 
 
