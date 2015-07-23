@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import corebusiness.pianiVacanze.exception.PortoNotFound;
 import corebusiness.prenotazioni.GestorePrenotazioni;
 import dao.PianoVacanza_DAO;
 import dao.Porto_DAO;
@@ -84,6 +85,17 @@ public class GestorePianiVacanze implements IGestorePianiVacanze {
 			e.printStackTrace();
 		}
 		return null;		
+	}
+
+	@Override
+	public Porto getPorto(Integer id) throws PortoNotFound {
+		try {
+			return Porto_DAO.read(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 

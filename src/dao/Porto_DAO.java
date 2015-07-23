@@ -78,9 +78,9 @@ public class Porto_DAO {
 		preparedStatement.setInt(2, porto.getIDPorto());
 		boolean rowaffected = preparedStatement.execute();
 		if(!rowaffected){
+			DBManager.closeConnection();
 			throw new PortoNotFound();
 		}
-		DBManager.closeConnection();
 	}	
 	public static void delete(Porto porto) throws SQLException {
 		Integer id=porto.getIDPorto();

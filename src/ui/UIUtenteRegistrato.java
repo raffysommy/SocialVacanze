@@ -2,6 +2,7 @@ package ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +12,8 @@ import java.util.GregorianCalendar;
 import corebusiness.pianiVacanze.GestorePianiVacanze;
 import corebusiness.pianiVacanze.PianoVacanza;
 import corebusiness.pianiVacanze.Porto;
+import corebusiness.pianiVacanze.exception.PortoNotFound;
+import dao.Porto_DAO;
 public class UIUtenteRegistrato {
 	/**
      * 
@@ -23,14 +26,23 @@ public class UIUtenteRegistrato {
      * 
      */
     public void RicercaPianoVacanze() {    	
-        Porto portodipartenza=SelezionaPorto();
+    	getListaPorti();
+    	System.out.println("Digita l'ID del Porto Corrispondente");
+        Integer i = getFormattedInteger();
+        Porto portodipartenza=SelezionaPorto(i);
+        if(portodipartenza==null){
+        	return;
+        }
         Date datadipartenza=SelezionaData();
+        if(datadipartenza==null){
+        	return;
+        }
         System.out.println("Hai Scelto di partire in data "+ datadipartenza.toString()+ " Dal Porto di "+portodipartenza.getNome());
         GestorePianiVacanze gestore=GestorePianiVacanze.getistance();
         ArrayList<PianoVacanza> listapiani = gestore.RicercaVacanza(datadipartenza, portodipartenza);
         System.out.println("Trovati "+ listapiani.size()+" Piani Vacanze Disponibili");
-        for(int i=0;i<listapiani.size();i++){
-        	PianoVacanza piano=listapiani.get(i);
+        for(int j=0;j<listapiani.size();j++){
+        	PianoVacanza piano=listapiani.get(j);
         	System.out.println("Piano Vacanza ID:"+piano.getIDPianoVacanza()+" Data Partenza: "+ piano.getDataPartenza().toString()+" Data Arrivo: " + piano.getDataArrivo().toString() + " Costo: "+piano.getCosto()+" Porto Partenza: " + piano.getPortoPartenza().getNome()+ " Porto Arrivo: " + piano.getPortoArrivo().getNome() );
         }
     }
@@ -39,31 +51,26 @@ public class UIUtenteRegistrato {
      * 
      */
     public void getListaPorti() {
-        // TODO implement here
+        System.out.println("Scegli il porto di partenza da questa lista");
+        GestorePianiVacanze gestore=GestorePianiVacanze.getistance();
+        ArrayList<Porto> listaporti = gestore.ListaPorti();
+        for(int i=0;i<listaporti.size();i++){
+        	System.out.println("ID: "+listaporti.get(i).getIDPorto()+" Nome: "+listaporti.get(i).getNome());
+        }
     }
 
     /**
      * @return 
      * 
      */
-    public Porto SelezionaPorto() {
-        System.out.println("Scegli il porto di partenza da questa lista");
-        GestorePianiVacanze gestore=GestorePianiVacanze.getistance();
-        ArrayList<Porto> listaporti = gestore.ListaPorti();
-        for(int i=0;i<listaporti.size();i++){
-        	System.out.println(i+" Nome: "+listaporti.get(i).getNome());
-        }
-        System.out.println("Digita il numero del Porto Corrispondente");
-        Integer i = getFormattedInteger();
-        if(i>=listaporti.size()){
-        	System.err.println("Scelta non valida");
-        	SelezionaPorto();
-        	return null;
-        }
-        else{
-        	return listaporti.get(i);
-        }
-        	
+    public Porto SelezionaPorto(Integer i) {
+        try {
+        	return GestorePianiVacanze.getistance().getPorto(i);
+		} catch (PortoNotFound e) {
+			// TODO Auto-generated catch block
+			e.printErrorMessage();
+		}
+		return null;
     }
     public Integer getFormattedInteger(){
     	Integer intero=null;
@@ -79,13 +86,12 @@ public class UIUtenteRegistrato {
 		} catch (NumberFormatException | IOException e) {
 			System.err.println("Errore nell'inserimento del Numero");
 		}
-		return null;
+		return Integer.MAX_VALUE;
     }
     /**
      * @return 
      * 
      */
-    @SuppressWarnings("deprecation")
 	public Date SelezionaData() {
     	System.out.println("Inserisci il giorno di Partenza");
     	Integer Giorno = getFormattedInteger();
@@ -97,9 +103,10 @@ public class UIUtenteRegistrato {
     	return DataPartenza;
     }
     public Date FormattaData(Integer year,Integer month,Integer day) {
-       	Calendar cal = GregorianCalendar.getInstance();
-    	cal.set(year, month-1, day);
-    	//return cal.getTime();
+    	if(year<=0 || month<1 || month>12 || day<=0 || day>31){
+    		System.err.println("Valori Invalidi per La Data");
+    		return null;
+    	}
     	return new java.sql.Date(year-1900, month-1, day);
     }
 
