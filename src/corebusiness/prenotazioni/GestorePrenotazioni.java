@@ -17,15 +17,15 @@ public class GestorePrenotazioni implements IGestorePrenotazioni {
 	public Integer PostiPrenotatiperPiano(PianoVacanza piano){
 		Integer posti=0;
 		try {
-			ArrayList<Prenotazione> listaprenotazioni=Prenotazione_DAO.allread();
+			ArrayList<Prenotazione> listaprenotazioni=Prenotazione_DAO.readall();
 			for(int i=0;i<listaprenotazioni.size();i++){
 				if(listaprenotazioni.get(i).getPianoVacanza().equals(piano)){
 					posti=posti+listaprenotazioni.get(i).getNumeroPasseggeri();
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("Errore nel recupero dei Dati");
+			System.exit(-1);
 		}
 		return posti;
 		

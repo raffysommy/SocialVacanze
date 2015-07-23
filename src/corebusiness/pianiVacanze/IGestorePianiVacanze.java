@@ -17,28 +17,28 @@ public interface IGestorePianiVacanze {
     /**
      * @param P
      */
-    public void InserisciPianoVacanza(PianoVacanza P);
+    public void inserisciPianoVacanza(PianoVacanza P);
 
     /**
      * @param P
      */
-    public void ModificaPianoVacanza(PianoVacanza P);
+    public void modificaPianoVacanza(PianoVacanza P);
 
     /**
      * @param P
      */
-    public void EliminaPianoVacanza(PianoVacanza P);
+    public void eliminaPianoVacanza(PianoVacanza P);
 
     /**
      * @param P
      */
-    public void VerificaDate(PianoVacanza P);
-    public ArrayList<Porto> ListaPorti();
+    public void verificaDate(PianoVacanza P);
+    public ArrayList<Porto> listaPorti();
     /**
      * @param D 
      * @param P 
      * @return
      */
-    public ArrayList<PianoVacanza> RicercaVacanza(Date D, Porto P);
+    public ArrayList<PianoVacanza> ricercaVacanza(Date D, Porto P);
     public Porto getPorto(Integer id) throws PortoNotFound;
 }

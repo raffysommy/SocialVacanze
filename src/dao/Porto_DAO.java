@@ -94,7 +94,7 @@ public class Porto_DAO {
 			preparedStatement.close();
 		}
 	}
-	public static ArrayList<Porto> allread() throws SQLException{
+	public static ArrayList<Porto> readall() throws SQLException{
 		Connection connessione=DBManager.getConnection();
 		PreparedStatement preparedStatement = connessione.prepareStatement("SELECT * FROM porti");
 		ArrayList<Porto> listaporti = new ArrayList<Porto>();

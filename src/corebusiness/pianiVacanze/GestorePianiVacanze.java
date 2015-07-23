@@ -22,35 +22,35 @@ import dao.Porto_DAO;
 public class GestorePianiVacanze implements IGestorePianiVacanze {
 
 	@Override
-	public void InserisciPianoVacanza(PianoVacanza P) {
+	public void inserisciPianoVacanza(PianoVacanza P) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void ModificaPianoVacanza(PianoVacanza P) {
+	public void modificaPianoVacanza(PianoVacanza P) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void EliminaPianoVacanza(PianoVacanza P) {
+	public void eliminaPianoVacanza(PianoVacanza P) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void VerificaDate(PianoVacanza P) {
+	public void verificaDate(PianoVacanza P) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public ArrayList<PianoVacanza> RicercaVacanza(Date D, Porto P) {
+	public ArrayList<PianoVacanza> ricercaVacanza(Date D, Porto P) {
 		GestorePrenotazioni gestore=GestorePrenotazioni.getistance();
 		ArrayList<PianoVacanza> listapiani=new ArrayList<PianoVacanza>();
 		try {
-			ArrayList<PianoVacanza> piano=PianoVacanza_DAO.allread();
+			ArrayList<PianoVacanza> piano=PianoVacanza_DAO.readall();
 			for(int i=0;i<piano.size();i++){
 				if(piano.get(i).getDataPartenza().equals(D) && piano.get(i).getPortoPartenza().equals(P)){
 					if((piano.get(i).getNumeroMassimo()-gestore.PostiPrenotatiperPiano(piano.get(i)))>0){
@@ -59,8 +59,8 @@ public class GestorePianiVacanze implements IGestorePianiVacanze {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("Errore nel recupero dei Dati");
+			System.exit(-1);
 		}
 		return listapiani;
 	}
@@ -77,12 +77,12 @@ public class GestorePianiVacanze implements IGestorePianiVacanze {
 	}
 
 	@Override
-	public ArrayList<Porto> ListaPorti() {
+	public ArrayList<Porto> listaPorti() {
 		try {
-			return Porto_DAO.allread();
+			return Porto_DAO.readall();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("Errore nel recupero dei Dati");
+			System.exit(-1);
 		}
 		return null;		
 	}
@@ -92,8 +92,8 @@ public class GestorePianiVacanze implements IGestorePianiVacanze {
 		try {
 			return Porto_DAO.read(id);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("Errore nel recupero dei Dati");
+			System.exit(-1);
 		}
 		return null;
 	}

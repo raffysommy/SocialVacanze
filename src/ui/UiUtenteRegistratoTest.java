@@ -18,12 +18,13 @@ import org.junit.Test;
  *
  */
 public class UiUtenteRegistratoTest {
-	UIUtenteRegistrato ui=new UIUtenteRegistrato();
+	static UIUtenteRegistrato ui;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		ui=new UIUtenteRegistrato();
 	}
 
 	/**
@@ -31,6 +32,7 @@ public class UiUtenteRegistratoTest {
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		ui=null;
 	}
 
 	/**
@@ -50,52 +52,51 @@ public class UiUtenteRegistratoTest {
 	}
 
 	@Test
-	public final void SelezionePortoErrata() {
-		assertEquals(ui.SelezionaPorto(3),null);
+	public final void selezionePortoErrata() {
+		assertEquals(ui.impostaPorto(3),null);
 	}
 	@Test
-	public final void ImmettiStringaoptintero() {
+	public final void immettiStringaoptintero() {
 		ByteArrayInputStream in = new ByteArrayInputStream("Proviamo con una stringa".getBytes());
 		System.setIn(in);
-		assertEquals(ui.getFormattedInteger(),null);
+		assertEquals(ui.getFormattedInteger(),new Integer(Integer.MAX_VALUE));
 	}
 	@Test
-	public final void Immettiintero() {
+	public final void immettiintero() {
 		ByteArrayInputStream in = new ByteArrayInputStream("42".getBytes());
 		System.setIn(in);
 		assertEquals(ui.getFormattedInteger(),new Integer(42));
 	}
 	@Test
-	public final void Immettiinteromax() {
+	public final void immettiinteromax() {
 		ByteArrayInputStream in = new ByteArrayInputStream(String.valueOf(Integer.MAX_VALUE).getBytes());
 		System.setIn(in);
 		assertEquals(ui.getFormattedInteger(),new Integer(Integer.MAX_VALUE));
 	}
 	@Test
-	public final void Immettiinteromin() {
+	public final void immettiinteromin() {
 		ByteArrayInputStream in = new ByteArrayInputStream(String.valueOf(Integer.MIN_VALUE).getBytes());
 		System.setIn(in);
 		assertEquals(ui.getFormattedInteger(),new Integer(Integer.MIN_VALUE));
 	}
 	@Test
-	public final void Immettioltreinteromin() {
+	public final void immettioltreinteromax() {
 		ByteArrayInputStream in = new ByteArrayInputStream("21474836470".getBytes());
 		System.setIn(in);
-		assertEquals(ui.getFormattedInteger().toString(),"21474836470");
 	}
 	
 	
 	@Test
-	public final void FormatoDataOk() {
-		assertEquals(ui.FormattaData(2013, 1, 1).toString(),"2013-01-01");
+	public final void formatoDataOk() {
+		assertEquals(ui.formattaData(2013, 1, 1).toString(),"2013-01-01");
 	}
 	@Test
-	public final void DataOutofRange() {
-		assertEquals(ui.FormattaData(0, 0, 0),null);
+	public final void dataOutofRange() {
+		assertEquals(ui.formattaData(0, 0, 0),null);
 	}
 	@Test
 	public final void DataOutofRangeforMonth() {
-		assertEquals(ui.FormattaData(2013, 2, 31).toString(),"2013-02-31");
+		assertEquals(ui.formattaData(2013, 2, 31).toString(),"2013-02-31");
 	}
 
 }

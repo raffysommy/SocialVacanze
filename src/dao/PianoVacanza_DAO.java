@@ -107,7 +107,7 @@ public class PianoVacanza_DAO {
 			preparedStatement.close();
 		}
 	}
-	public static ArrayList<PianoVacanza> allread() throws SQLException{
+	public static ArrayList<PianoVacanza> readall() throws SQLException{
 		Connection connessione=DBManager.getConnection();
 		PreparedStatement preparedStatement = connessione.prepareStatement("SELECT * FROM pianivacanze");
 		ArrayList<PianoVacanza> listapiani = new ArrayList<PianoVacanza>();

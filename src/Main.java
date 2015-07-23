@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		UIUtenteRegistrato ui=new UIUtenteRegistrato();
-		ui.RicercaPianoVacanze();
+		ui.ricercaPianoVacanze();
 	}
 
 }

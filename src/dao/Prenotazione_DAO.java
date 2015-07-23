@@ -104,7 +104,7 @@ public class Prenotazione_DAO {
 			preparedStatement.close();
 		}
 	}
-	public static ArrayList<Prenotazione> allread() throws SQLException{
+	public static ArrayList<Prenotazione> readall() throws SQLException{
 		Connection connessione=DBManager.getConnection();
 		PreparedStatement preparedStatement = connessione.prepareStatement("SELECT * FROM Prenotazioni");
 		ArrayList<Prenotazione> listaPrenotazione = new ArrayList<Prenotazione>();
