@@ -43,7 +43,7 @@ public class PianoVacanza_DAO {
 		return piano;
 
 	}
-	public static PianoVacanza read(Integer IDPianoVacanza) throws SQLException, PianoVacanzaNotFound{
+	public static PianoVacanza read(Integer IDPianoVacanza) throws SQLException, PianoVacanzaNotFound, PortoNotFound{
 		if(restoredObjects.containsKey(IDPianoVacanza)){
 			return restoredObjects.get(IDPianoVacanza);
 		}
@@ -54,13 +54,8 @@ public class PianoVacanza_DAO {
 		ResultSet rs= preparedStatement.executeQuery();
 		if(rs.first()){
 			if (!rs.wasNull()){
-				try {
 					piano=new PianoVacanza(rs.getInt("IDPianoVacanza"),rs.getDate("DataPartenza"),
 							rs.getInt("NumeroMassimo"),rs.getInt("Costo"),rs.getDate("DataArrivo"),null,Porto_DAO.read(rs.getInt("PortoPartenza")),Porto_DAO.read(rs.getInt("PortoArrivo")));
-				} catch (PortoNotFound e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				restoredObjects.put(IDPianoVacanza, piano);
 			}
 		}
@@ -107,19 +102,14 @@ public class PianoVacanza_DAO {
 			preparedStatement.close();
 		}
 	}
-	public static ArrayList<PianoVacanza> readall() throws SQLException{
+	public static ArrayList<PianoVacanza> readall() throws SQLException, PortoNotFound{
 		Connection connessione=DBManager.getConnection();
 		PreparedStatement preparedStatement = connessione.prepareStatement("SELECT * FROM pianivacanze");
 		ArrayList<PianoVacanza> listapiani = new ArrayList<PianoVacanza>();
 		ResultSet rs= preparedStatement.executeQuery();
 		while(rs.next()){
-				try {
 					listapiani.add(new PianoVacanza(rs.getInt("IDPianoVacanza"),rs.getDate("DataPartenza"),
 							rs.getInt("NumeroMassimo"),rs.getInt("Costo"),rs.getDate("DataArrivo"),null,Porto_DAO.read(rs.getInt("PortoPartenza")),Porto_DAO.read(rs.getInt("PortoArrivo"))));
-				} catch (PortoNotFound e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 		}
 
 		rs.close();

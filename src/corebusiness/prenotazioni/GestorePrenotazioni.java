@@ -4,17 +4,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import corebusiness.pianiVacanze.PianoVacanza;
+import corebusiness.pianiVacanze.exception.PianoVacanzaNotFound;
+import corebusiness.pianiVacanze.exception.PortoNotFound;
 import dao.Prenotazione_DAO;
 
 public class GestorePrenotazioni implements IGestorePrenotazioni {
 
 	@Override
-	public void PrenotaPianoVacanze(Prenotazione P) {
+	public void prenotaPianoVacanze(Prenotazione P) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	public Integer PostiPrenotatiperPiano(PianoVacanza piano){
+	public Integer postiPrenotatiperPiano(PianoVacanza piano) throws PianoVacanzaNotFound, PortoNotFound{
 		Integer posti=0;
 		try {
 			ArrayList<Prenotazione> listaprenotazioni=Prenotazione_DAO.readall();

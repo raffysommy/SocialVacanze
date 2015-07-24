@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import corebusiness.pianiVacanze.exception.PianoVacanzaNotFound;
 import corebusiness.pianiVacanze.exception.PortoNotFound;
 import corebusiness.prenotazioni.GestorePrenotazioni;
 import dao.PianoVacanza_DAO;
@@ -46,14 +47,14 @@ public class GestorePianiVacanze implements IGestorePianiVacanze {
 	}
 
 	@Override
-	public ArrayList<PianoVacanza> ricercaVacanza(Date D, Porto P) {
+	public ArrayList<PianoVacanza> ricercaVacanza(Date D, Porto P) throws PortoNotFound, PianoVacanzaNotFound {
 		GestorePrenotazioni gestore=GestorePrenotazioni.getistance();
 		ArrayList<PianoVacanza> listapiani=new ArrayList<PianoVacanza>();
 		try {
 			ArrayList<PianoVacanza> piano=PianoVacanza_DAO.readall();
 			for(int i=0;i<piano.size();i++){
 				if(piano.get(i).getDataPartenza().equals(D) && piano.get(i).getPortoPartenza().equals(P)){
-					if((piano.get(i).getNumeroMassimo()-gestore.PostiPrenotatiperPiano(piano.get(i)))>0){
+					if((piano.get(i).getNumeroMassimo()-gestore.postiPrenotatiperPiano(piano.get(i)))>0){
 						listapiani.add(piano.get(i));
 					}
 				}

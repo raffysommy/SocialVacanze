@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import corebusiness.pianiVacanze.GestorePianiVacanze;
 import corebusiness.pianiVacanze.PianoVacanza;
 import corebusiness.pianiVacanze.Porto;
+import corebusiness.pianiVacanze.exception.PianoVacanzaNotFound;
 import corebusiness.pianiVacanze.exception.PortoNotFound;
 import dao.Porto_DAO;
 public class UIUtenteRegistrato {
@@ -36,12 +37,19 @@ public class UIUtenteRegistrato {
         }
         System.out.println("Hai Scelto di partire in data "+ datadipartenza.toString()+ " Dal Porto di "+portodipartenza.getNome());
         GestorePianiVacanze gestore=GestorePianiVacanze.getistance();
-        ArrayList<PianoVacanza> listapiani = gestore.ricercaVacanza(datadipartenza, portodipartenza);
-        System.out.println("Trovati "+ listapiani.size()+" Piani Vacanze Disponibili");
-        for(int j=0;j<listapiani.size();j++){
-        	PianoVacanza piano=listapiani.get(j);
-        	System.out.println("Piano Vacanza ID:"+piano.getIDPianoVacanza()+" Data Partenza: "+ piano.getDataPartenza().toString()+" Data Arrivo: " + piano.getDataArrivo().toString() + " Costo: "+piano.getCosto()+" Porto Partenza: " + piano.getPortoPartenza().getNome()+ " Porto Arrivo: " + piano.getPortoArrivo().getNome() );
-        }
+        ArrayList<PianoVacanza> listapiani = null;
+			try {
+				listapiani = gestore.ricercaVacanza(datadipartenza, portodipartenza);
+				System.out.println("Trovati "+ listapiani.size()+" Piani Vacanze Disponibili");
+		        for(int j=0;j<listapiani.size();j++){
+		        	PianoVacanza piano=listapiani.get(j);
+		        	System.out.println("Piano Vacanza ID:"+piano.getIDPianoVacanza()+" Data Partenza: "+ piano.getDataPartenza().toString()+" Data Arrivo: " + piano.getDataArrivo().toString() + " Costo: "+piano.getCosto()+" Porto Partenza: " + piano.getPortoPartenza().getNome()+ " Porto Arrivo: " + piano.getPortoArrivo().getNome() );
+		        }
+			} catch (PortoNotFound e) {
+				e.printErrorMessage();
+			} catch (PianoVacanzaNotFound e) {
+				e.printErrorMessage();
+			}
     }
 
     /**

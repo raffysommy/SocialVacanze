@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import corebusiness.pianiVacanze.exception.PianoVacanzaNotFound;
+import corebusiness.pianiVacanze.exception.PortoNotFound;
 import corebusiness.prenotazioni.Prenotazione;
 import corebusiness.prenotazioni.exception.PrenotazioneNotFound;
 
@@ -45,7 +46,7 @@ public class Prenotazione_DAO {
 		return prenotazion;
 
 	}
-	public static Prenotazione read(Integer IDPrenotazione) throws SQLException, PrenotazioneNotFound{
+	public static Prenotazione read(Integer IDPrenotazione) throws SQLException, PrenotazioneNotFound, PianoVacanzaNotFound, PortoNotFound{
 		if(restoredObjects.containsKey(IDPrenotazione)){
 			return restoredObjects.get(IDPrenotazione);
 		}
@@ -56,13 +57,8 @@ public class Prenotazione_DAO {
 		ResultSet rs= preparedStatement.executeQuery();
 		if(rs.first()){
 			if (!rs.wasNull()){
-				try {
 					prenotazion=new Prenotazione(rs.getInt("IDPrenotazione"),rs.getDate("DataPrenotazione"),rs.getInt("NumeroPasseggeri"),PianoVacanza_DAO.read(rs.getInt("PianoVacanze")),null);
-				} catch (PianoVacanzaNotFound e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				restoredObjects.put(IDPrenotazione, prenotazion);
+					restoredObjects.put(IDPrenotazione, prenotazion);
 			}
 		}
 		else {
@@ -104,18 +100,13 @@ public class Prenotazione_DAO {
 			preparedStatement.close();
 		}
 	}
-	public static ArrayList<Prenotazione> readall() throws SQLException{
+	public static ArrayList<Prenotazione> readall() throws SQLException, PianoVacanzaNotFound, PortoNotFound{
 		Connection connessione=DBManager.getConnection();
 		PreparedStatement preparedStatement = connessione.prepareStatement("SELECT * FROM Prenotazioni");
 		ArrayList<Prenotazione> listaPrenotazione = new ArrayList<Prenotazione>();
 		ResultSet rs= preparedStatement.executeQuery();
 		while(rs.next()){
-				try {
 					listaPrenotazione.add(new Prenotazione(rs.getInt("IDPrenotazione"),rs.getDate("DataPrenotazione"),rs.getInt("NumeroPasseggeri"),PianoVacanza_DAO.read(rs.getInt("PianoVacanza")),null));
-				} catch (PianoVacanzaNotFound e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 		}
 
 		rs.close();

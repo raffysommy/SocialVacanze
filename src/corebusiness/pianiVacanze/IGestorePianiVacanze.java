@@ -6,6 +6,7 @@ package corebusiness.pianiVacanze;
 import java.util.ArrayList;
 import java.util.Date;
 
+import corebusiness.pianiVacanze.exception.PianoVacanzaNotFound;
 import corebusiness.pianiVacanze.exception.PortoNotFound;
 
 /**
@@ -38,7 +39,9 @@ public interface IGestorePianiVacanze {
      * @param D 
      * @param P 
      * @return
+     * @throws PortoNotFound 
+     * @throws PianoVacanzaNotFound 
      */
-    public ArrayList<PianoVacanza> ricercaVacanza(Date D, Porto P);
+    public ArrayList<PianoVacanza> ricercaVacanza(Date D, Porto P) throws PortoNotFound, PianoVacanzaNotFound;
     public Porto getPorto(Integer id) throws PortoNotFound;
 }
