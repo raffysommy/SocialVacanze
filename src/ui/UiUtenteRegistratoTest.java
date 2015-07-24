@@ -53,7 +53,7 @@ public class UiUtenteRegistratoTest {
 
 	@Test
 	public final void selezionePortoErrata() {
-		assertEquals(ui.impostaPorto(3),null);
+		assertEquals(ui.impostaPorto(6),null);
 	}
 	@Test
 	public final void immettiStringaoptintero() {

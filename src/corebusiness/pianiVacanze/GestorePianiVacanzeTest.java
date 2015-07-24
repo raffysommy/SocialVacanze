@@ -41,7 +41,7 @@ public class GestorePianiVacanzeTest {
 	}
 	@Test
 	public final void ricercaNonPresente() throws PortoNotFound, PianoVacanzaNotFound{
-		assertTrue(gestore.ricercaVacanza(new java.sql.Date(2012-1900,1-1, 1),new Porto(1,"Ny-Alesund")).size()==0);
+		assertTrue(gestore.ricercaVacanza(new java.sql.Date(2012-1900,1-1, 1),new Porto(5,"Hoek-Van-Holland")).size()==0);
 	}
 	@Test
 	public final void listaPortiPresente(){

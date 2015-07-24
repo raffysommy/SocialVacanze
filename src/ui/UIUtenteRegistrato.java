@@ -2,19 +2,15 @@ package ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+
 
 import corebusiness.pianiVacanze.GestorePianiVacanze;
 import corebusiness.pianiVacanze.PianoVacanza;
 import corebusiness.pianiVacanze.Porto;
 import corebusiness.pianiVacanze.exception.PianoVacanzaNotFound;
 import corebusiness.pianiVacanze.exception.PortoNotFound;
-import dao.Porto_DAO;
 public class UIUtenteRegistrato {
 	/**
      * 
