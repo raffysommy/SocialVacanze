@@ -36,12 +36,18 @@ public interface IGestorePianiVacanze {
     public void verificaDate(PianoVacanza P);
     public ArrayList<Porto> listaPorti();
     /**
-     * @param D 
-     * @param P 
-     * @return
-     * @throws PortoNotFound 
-     * @throws PianoVacanzaNotFound 
+     * @param D Data di Partenza
+     * @param P Porto di Partenza
+     * @return Piani Vacanza
+     * @throws PortoNotFound Porto non trovato 
+     * @throws PianoVacanzaNotFound Piano Vacanza non trovato
      */
     public ArrayList<PianoVacanza> ricercaVacanza(Date D, Porto P) throws PortoNotFound, PianoVacanzaNotFound;
+    /**
+     * 
+     * @param id ID Porto
+     * @return Porto
+     * @throws PortoNotFound Porto non trovato
+     */
     public Porto getPorto(Integer id) throws PortoNotFound;
 }

@@ -44,6 +44,9 @@ public class PianoVacanza_DAO {
 
 	}
 	public static PianoVacanza read(Integer IDPianoVacanza) throws SQLException, PianoVacanzaNotFound, PortoNotFound{
+		if(IDPianoVacanza==null){
+			throw new PianoVacanzaNotFound();
+		}
 		if(restoredObjects.containsKey(IDPianoVacanza)){
 			return restoredObjects.get(IDPianoVacanza);
 		}

@@ -55,11 +55,11 @@ public class UiUtenteRegistratoTest {
 	public final void selezionePortoErrata() {
 		assertEquals(ui.impostaPorto(6),null);
 	}
-	@Test
+	@Test(expected=NumberFormatException.class)
 	public final void immettiStringaoptintero() {
 		ByteArrayInputStream in = new ByteArrayInputStream("Proviamo con una stringa".getBytes());
 		System.setIn(in);
-		assertEquals(ui.getFormattedInteger(),new Integer(Integer.MAX_VALUE));
+		assertEquals(ui.getFormattedInteger(),null);
 	}
 	@Test
 	public final void immettiintero() {
@@ -79,10 +79,11 @@ public class UiUtenteRegistratoTest {
 		System.setIn(in);
 		assertEquals(ui.getFormattedInteger(),new Integer(Integer.MIN_VALUE));
 	}
-	@Test
+	@Test(expected=NumberFormatException.class)
 	public final void immettioltreinteromax() {
 		ByteArrayInputStream in = new ByteArrayInputStream("21474836470".getBytes());
 		System.setIn(in);
+		assertEquals(ui.getFormattedInteger(),null);
 	}
 	
 	
@@ -92,7 +93,7 @@ public class UiUtenteRegistratoTest {
 	}
 	@Test
 	public final void dataOutofRange() {
-		assertEquals(ui.formattaData(0, 0, 0),null);
+		assertEquals(ui.formattaData(1900, 2, 1),null);
 	}
 	@Test
 	public final void DataOutofRangeforMonth() {

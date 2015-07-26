@@ -44,6 +44,9 @@ public class Porto_DAO {
 
 	}
 	public static Porto read(Integer IDPorto) throws SQLException, PortoNotFound{
+		if(IDPorto==null){
+			throw new PortoNotFound();
+		}
 		if(restoredObjects.containsKey(IDPorto)){
 			return restoredObjects.get(IDPorto);
 		}

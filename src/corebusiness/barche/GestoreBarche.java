@@ -33,7 +33,8 @@ public class GestoreBarche implements IGestoreBarche {
 	}
 
 	/**
-	 * @return
+	 * Singleton
+	 * @return Istanza
 	 */
 	public static GestoreBarche getistance() {
 		if (istance == null) {

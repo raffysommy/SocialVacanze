@@ -13,14 +13,14 @@ import corebusiness.pianiVacanze.exception.PianoVacanzaNotFound;
 import corebusiness.pianiVacanze.exception.PortoNotFound;
 public class UIUtenteRegistrato {
 	/**
-     * 
+     * Costruttore
      */
     public UIUtenteRegistrato() {
     	
     }
 
     /**
-     * 
+     * Metodo di RicercaPianiVacanze
      */
     public void ricercaPianoVacanze() {    	
     	Porto portodipartenza=selezionaPorto();
@@ -49,13 +49,18 @@ public class UIUtenteRegistrato {
     }
 
     /**
-     * 
+     * Metodo di selezione del Porto (Stampa la lista di porto e permette la scelta)
      */
     public Porto selezionaPorto(){
     	getListaPorti();
     	System.out.println("Digita l'ID del Porto Corrispondente");
-        Integer i = getFormattedInteger();
-        return impostaPorto(i);
+        try {
+			Integer i = getFormattedInteger();
+			return impostaPorto(i);
+		} catch (NumberFormatException e) {
+			System.err.println("Numero inserito non valido");
+		}
+        return null;
     }
     public void getListaPorti() {
         System.out.println("Scegli il porto di partenza da questa lista");
@@ -67,7 +72,9 @@ public class UIUtenteRegistrato {
     }
 
     /**
-     * @return 
+     * Metodo di impostazione del porto di partenza
+     * @param i id del porto
+     * @return Porto di Partenza
      * 
      */
     public Porto impostaPorto(Integer i) {
@@ -79,7 +86,12 @@ public class UIUtenteRegistrato {
 		}
 		return null;
     }
-    public Integer getFormattedInteger(){
+    /**
+     * Preleva un input intero
+     * @return Intero Formattato
+     * @throws NumberFormatException Numero non valido
+     */
+    public Integer getFormattedInteger() throws NumberFormatException {
     	Integer intero=null;
     	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		boolean WFI = true;
@@ -90,28 +102,43 @@ public class UIUtenteRegistrato {
 					WFI = false;
 			}
 			return intero;
-		} catch (NumberFormatException | IOException e) {
-			System.err.println("Errore nell'inserimento del Numero");
+		} catch (IOException e) {
+			System.err.println("Errore nell'inserimento");
 		}
-		return Integer.MAX_VALUE;
+		return null;
     }
     /**
-     * @return 
+     * Metodo per la selezione della data
+     * @return Data
      * 
      */
 	public Date selezionaData() {
-    	System.out.println("Inserisci il giorno di Partenza");
-    	Integer Giorno = getFormattedInteger();
-    	System.out.println("Inserisci il mese di Partenza in formato decimale");
-    	Integer Mese = getFormattedInteger();
-    	System.out.println("Inserisci l'anno di Partenza");
-    	Integer Anno=getFormattedInteger();
-    	Date DataPartenza = formattaData(Anno,Mese,Giorno);
-    	return DataPartenza;
+    	try {
+			System.out.println("Inserisci il giorno di Partenza");
+			Integer Giorno = getFormattedInteger();
+			System.out.println("Inserisci il mese di Partenza in formato decimale");
+			Integer Mese = getFormattedInteger();
+			System.out.println("Inserisci l'anno di Partenza");
+			Integer Anno=getFormattedInteger();
+			Date DataPartenza = formattaData(Anno,Mese,Giorno);
+			return DataPartenza;
+		} catch (NumberFormatException e) {
+			System.err.println("Numero inserito non valido");
+		}
+		return null;
     }
+	/** 
+	 * @param year anno
+	 * @param month mese
+	 * @param day giorno
+	 * @return Data Formattata
+	 */
     @SuppressWarnings("deprecation")
 	public Date formattaData(Integer year,Integer month,Integer day) {
-    	if(year<1970 && year>2038 || month<1 || month>12 || day<=0|| day>31){
+    	if(year==null||month==null||day==null){
+    		return null;
+    	}
+    	if(year<1970 || year>2038 || month<1 || month>12 || day<=0|| day>31){
     		System.err.println("Valori Invalidi per La Data");
     		return null;
     	}

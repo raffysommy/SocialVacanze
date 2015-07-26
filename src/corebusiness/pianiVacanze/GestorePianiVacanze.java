@@ -45,7 +45,6 @@ public class GestorePianiVacanze implements IGestorePianiVacanze {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public ArrayList<PianoVacanza> ricercaVacanza(Date D, Porto P) throws PortoNotFound, PianoVacanzaNotFound {
 		GestorePrenotazioni gestore=GestorePrenotazioni.getistance();
@@ -69,7 +68,10 @@ public class GestorePianiVacanze implements IGestorePianiVacanze {
 	private static GestorePianiVacanze istance;
 	
 	protected GestorePianiVacanze(){};
-	
+	/**
+	 * Singleton
+	 * @return Istanza
+	 */
 	public static GestorePianiVacanze getistance(){
 		if (istance == null) {
 			GestorePianiVacanze.istance = new GestorePianiVacanze();

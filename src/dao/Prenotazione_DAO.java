@@ -15,6 +15,12 @@ import corebusiness.prenotazioni.exception.PrenotazioneNotFound;
 
 public class Prenotazione_DAO {
 	protected static java.util.Map<Integer,Prenotazione> restoredObjects= new java.util.HashMap<Integer,Prenotazione>();
+	/**
+	 * Crea una nuova prenotazione
+	 * @param IDPrenotazione ID prenotazione
+	 * @return Nuova prenotazione nel database
+	 * @throws SQLException Eccezione SQL
+	 */
 	public static Prenotazione create(Integer IDPrenotazione) throws SQLException{
 		Connection c = DBManager.getConnection();
 		PreparedStatement preparedstat = c.prepareStatement("INSERT INTO Prenotazioni (IDPrenotazione) VALUES (?)");
@@ -26,6 +32,11 @@ public class Prenotazione_DAO {
 		return prenotazion;
 
 	}
+	/**
+	 * Crea una nuova prenotazione autoassegnando l'id
+	 * @return Nuova prenotazione nel database
+	 * @throws SQLException Eccezione SQL
+	 */
 	public static Prenotazione create() throws SQLException{
 		Connection c = DBManager.getConnection();
 		Statement stat = c.createStatement();
@@ -46,7 +57,19 @@ public class Prenotazione_DAO {
 		return prenotazion;
 
 	}
+	/**
+	 * Legge la prenotazione dal database
+	 * @param IDPrenotazione Id della prenotazione
+	 * @return Prenotazione	
+	 * @throws SQLException Eccezzione SQL
+	 * @throws PrenotazioneNotFound Prenotazione non trovata 
+	 * @throws PianoVacanzaNotFound	Piano Vacanza associato non trovato
+	 * @throws PortoNotFound Porto non trovato
+	 */
 	public static Prenotazione read(Integer IDPrenotazione) throws SQLException, PrenotazioneNotFound, PianoVacanzaNotFound, PortoNotFound{
+		if(IDPrenotazione==null){
+			throw new PrenotazioneNotFound();
+		}
 		if(restoredObjects.containsKey(IDPrenotazione)){
 			return restoredObjects.get(IDPrenotazione);
 		}
@@ -68,6 +91,12 @@ public class Prenotazione_DAO {
 		preparedStatement.close();
 		return prenotazion;
 	}
+	/**
+	 * Aggiorna Prenotazione
+	 * @param Prenotazione Prenotazione
+	 * @throws SQLException Eccezzione SQL
+	 * @throws PrenotazioneNotFound Prenotazione non troata nel database
+	 */
 	public static void update(Prenotazione Prenotazione) throws SQLException, PrenotazioneNotFound{
 		if(Prenotazione.getIDPrenotazione()==null){
 			Prenotazione prenotazion = Prenotazione_DAO.create(); // Ottengo un nuovo id
@@ -88,6 +117,11 @@ public class Prenotazione_DAO {
 		}
 		DBManager.closeConnection();
 	}	
+	/**
+	 * Cancella Prenotazione
+	 * @param Prenotazione Prenotazione
+	 * @throws SQLException Eccezzione SQL
+	 */
 	public static void delete(Prenotazione Prenotazione) throws SQLException {
 		Integer id=Prenotazione.getIDPrenotazione();
 		if(id != null){
@@ -100,6 +134,13 @@ public class Prenotazione_DAO {
 			preparedStatement.close();
 		}
 	}
+	/**
+	 * 
+	 * @return Tutte le prenotazioni
+	 * @throws SQLException Eccezzione SQL
+	 * @throws PianoVacanzaNotFound	Piano Vacanza associato non trovato
+	 * @throws PortoNotFound Porto non trovato
+	 */
 	public static ArrayList<Prenotazione> readall() throws SQLException, PianoVacanzaNotFound, PortoNotFound{
 		Connection connessione=DBManager.getConnection();
 		PreparedStatement preparedStatement = connessione.prepareStatement("SELECT * FROM Prenotazioni");

@@ -51,7 +51,7 @@ public class GestorePianiVacanzeTest {
 	public final void getPortoOk() throws PortoNotFound{
 		assertEquals(gestore.getPorto(1),new Porto(1,"Ny-Alesund"));
 	}
-	@Test
+	@Test(expected=PortoNotFound.class)
 	public final void getPortonotPresent() throws PortoNotFound{
 		assertEquals(gestore.getPorto(0),null);
 	}

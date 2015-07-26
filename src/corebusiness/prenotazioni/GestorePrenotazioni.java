@@ -34,6 +34,10 @@ public class GestorePrenotazioni implements IGestorePrenotazioni {
 	}
 	private static GestorePrenotazioni istance;
 	protected GestorePrenotazioni(){};
+	/**
+	 * Singleton
+	 * @return Istanza
+	 */
 	public static GestorePrenotazioni getistance(){
 		if(istance==null){
 			istance=new GestorePrenotazioni();
